@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Generation</title>
+    <script>
+        // 音声生成関数
+        function generateVoice() {
+            // Web Speech APIを使用して音声合成を行う
+            const synth = window.speechSynthesis;
+            const voices = synth.getVoices();
+            
+            // 合成するテキスト
+            const text = document.getElementById("text").value;
+            
+            // SpeechSynthesisUtteranceオブジェクトを作成し、テキストと音声設定を指定する
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = voices[0]; // 使用する音声の選択（ここでは最初の音声を使用）
+            
+            // 音声を再生する
+            synth.speak(utterance);
+        }
+    </script>
+</head>
+<body>
+    <h1>Voice Generation</h1>
+    <label for="text">テキスト入力:</label>
+    <input type="text" id="text">
+    <button onclick="generateVoice()">音声生成</button>
+</body>
+</html>
