@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MIDIファイルの再生</title>
+</head>
+<body>
+  <input type="file" id="midiFileInput" accept=".mid">
+  <button onclick="playMidi()">再生</button>
+
+  <script>
+    function playMidi() {
+      const fileInput = document.getElementById('midiFileInput');
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const arrayBuffer = e.target.result;
+        const context = new AudioContext();
+
+        context.decodeAudioData(arrayBuffer, function(buffer) {
+          const source = context.createBufferSource();
+          source.buffer = buffer;
+          source.connect(context.destination);
+          source.start(0);
+        });
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
+</body>
+</html>
